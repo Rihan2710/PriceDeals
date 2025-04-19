@@ -1,21 +1,19 @@
-import Modal from "@/components/Modal";
-import PriceInfoCard from "@/components/PriceInfoCard";
-import ProductCard from "@/components/ProductCard";
-import { getProductById, getSimilarProducts } from "@/lib/actions"
+import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { notFound } from "next/navigation";
+import Modal from "@/components/Modal";
+import PriceInfoCard from "@/components/PriceInfoCard";
+import ProductCard from "@/components/ProductCard";
 
-// Remove explicit Props type
 const ProductDetails = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
   const product: Product = await getProductById(id);
+  if (!product) redirect('/');
 
-  if (!product) notFound(); // or redirect('/')
 
   const similarProducts = await getSimilarProducts(id);
 
