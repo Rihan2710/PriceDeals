@@ -12,10 +12,12 @@ type Props = {
   params: { id: string }
 }
 
-const ProductDetails = async ({ params: { id } }: Props) => {
+const ProductDetails = async (props: Props) => {
+  const { id } = props.params; // move destructuring here
+
   const product: Product = await getProductById(id);
 
-  if(!product) redirect('/')
+  if (!product) redirect('/');
 
   const similarProducts = await getSimilarProducts(id);
 
